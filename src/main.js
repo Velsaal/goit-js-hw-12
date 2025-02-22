@@ -4,6 +4,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('#search-form');
+const inputField = form.elements.searchQuery;
 const loader = document.querySelector('.loader');
 const gallery = document.querySelector('.gallery');
 const loadMoreBtn = document.createElement('button');
@@ -39,6 +40,7 @@ form.addEventListener('submit', async function(event) {
         } else {
             renderImages(data.hits);
             if (data.totalHits > 40) loadMoreBtn.style.display = 'block';
+            inputField.value = '';
         }
     } catch {
         iziToast.error({ message: 'Failed to fetch images. Try again later!' });
