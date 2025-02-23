@@ -57,20 +57,18 @@ loadMoreBtn.addEventListener('click', async function() {
     try {
         const data = await fetchImages(currentQuery, currentPage);
         renderImages(data.hits);
-        
-        if (currentPage * 40 >= totalHits) {
+    
+        if (currentPage * 40 < totalHits) {
+            loadMoreBtn.style.display = 'block';
+        } else {
             loadMoreBtn.style.display = 'none';
-            iziToast.info({ message: "You've reached the end of search results." });
+            iziToast.info({ message: "We're sorry, but you've reached the end of search results." });
         }
-
-        const firstImageCard = document.querySelector('.image-card');
-        if (firstImageCard) {
-            const  height  = firstImageCard.getBoundingClientRect();
-            window.scrollBy({ top: height * 2, behavior: 'smooth' });
-        }
-
+    
+        window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' });
+    
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching images:', error);
     } finally {
         loader.style.display = 'none';
     }
